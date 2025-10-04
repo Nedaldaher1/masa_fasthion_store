@@ -1,9 +1,13 @@
-import { View, Text } from 'react-native';
+import { Redirect } from 'expo-router';
+import { useAuthStore } from '../store/authStore';
 
-export default function Home() {
-  return (
-    <View className="flex-1 items-center justify-center">
-      <Text className="text-2xl font-bold">الصفحة الرئيسية</Text>
-    </View>
-  );
+export default function Index() {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
+  // 🔐 توجيه حسب حالة تسجيل الدخول
+  if (isAuthenticated) {
+    return <Redirect href="/(tabs)" />;
+  }
+
+  return <Redirect href="/(auth)/login" />;
 }
