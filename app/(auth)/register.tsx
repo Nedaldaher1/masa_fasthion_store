@@ -1,5 +1,5 @@
 // app/(auth)/register.tsx
-import { View, Text, ScrollView, Pressable } from 'react-native';
+import { View, ScrollView, Pressable } from 'react-native';
 import { Link, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,14 +9,18 @@ import Input from '../../components/Input';
 import Checkbox from '../../components/Checkbox';
 import SocialButton from '../../components/SocialButton';
 import ThemeToggle from '../../components/ThemeToggle';
+import CustomText from '../../components/CustomText';
 
 export default function Register() {
   const router = useRouter();
   const { colors } = useTheme();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
 
   return (
     <ScrollView 
@@ -32,15 +36,17 @@ export default function Register() {
 
       <View className="items-center mt-8 px-6">
         <Logo />
-        <Text style={{ color: colors.text }} className="text-2xl font-bold">
-          Create Your Account
-        </Text>
+        <CustomText style={{ color: colors.text }} className="text-2xl font-bold">
+          إنشاء حساب جديد
+        </CustomText>
       </View>
 
       <View className="px-6 mt-8 gap-4">
+
+
         <Input
           icon="mail-outline"
-          placeholder="Email"
+          placeholder="البريد الإلكتروني"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -48,7 +54,7 @@ export default function Register() {
 
         <Input
           icon="lock-closed-outline"
-          placeholder="Password"
+          placeholder="كلمة المرور"
           value={password}
           onChangeText={setPassword}
           secureTextEntry={!showPassword}
@@ -56,29 +62,31 @@ export default function Register() {
           onTogglePassword={() => setShowPassword(!showPassword)}
         />
 
+
+
         <Checkbox
-          checked={rememberMe}
-          onPress={() => setRememberMe(!rememberMe)}
-          label="Remember me"
+          checked={agreeToTerms}
+          onPress={() => setAgreeToTerms(!agreeToTerms)}
+          label="أوافق على الشروط والأحكام"
         />
 
         <Pressable 
           style={{ backgroundColor: colors.primary }}
           className="rounded-full py-3.5 mt-4"
         >
-          <Text 
+          <CustomText 
             style={{ color: colors.background }}
             className="text-center font-semibold text-base"
           >
-            Sign up
-          </Text>
+            إنشاء حساب
+          </CustomText>
         </Pressable>
 
         <View className="flex-row items-center my-2">
           <View style={{ backgroundColor: colors.border }} className="flex-1 h-px" />
-          <Text style={{ color: colors.textSecondary }} className="mx-4">
-            or continue with
-          </Text>
+          <CustomText style={{ color: colors.textSecondary }} className="mx-4">
+            أو المتابعة باستخدام
+          </CustomText>
           <View style={{ backgroundColor: colors.border }} className="flex-1 h-px" />
         </View>
 
@@ -87,15 +95,15 @@ export default function Register() {
           <SocialButton icon="facebook" variant="icon" />
         </View>
 
-        <View className="flex-row justify-center mt-6 mb-8">
-          <Text style={{ color: colors.textSecondary }}>
-            Already have an account?{' '}
-          </Text>
+        <View className="flex-row justify-center mt-6 mb-8 gap-2">
+          <CustomText style={{ color: colors.textSecondary }}>
+            لديك حساب بالفعل؟{' '}
+          </CustomText>
           <Link href="/(auth)/login" asChild>
             <Pressable>
-              <Text style={{ color: colors.text }} className="font-semibold">
-                Sign in
-              </Text>
+              <CustomText style={{ color: colors.primary }} className="font-semibold">
+                تسجيل الدخول
+              </CustomText>
             </Pressable>
           </Link>
         </View>

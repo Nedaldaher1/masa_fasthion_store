@@ -1,9 +1,10 @@
 // components/SocialButton.tsx
-import { Pressable, Text, Image, StyleSheet } from 'react-native';
+import { Pressable, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
 import { Colors } from '../constants/Colors';
 import { SocialButtonProps } from '../types';
+import CustomText from '../components/CustomText';
 
 export default function SocialButton({ 
   icon, 
@@ -15,16 +16,14 @@ export default function SocialButton({
 
   const iconMap = {
     google: { 
-      type: 'image' as const, 
-      source: require('../assets/google.png') 
+      name: 'logo-google' as const, 
+      color: variant === 'icon' ? '#DB4437' : colors.text 
     },
     facebook: { 
-      type: 'ionicon' as const, 
       name: 'logo-facebook' as const, 
       color: variant === 'icon' ? Colors.brand.facebook : 'white' 
     },
     apple: { 
-      type: 'ionicon' as const, 
       name: 'logo-apple' as const, 
       color: 'white' 
     }
@@ -65,15 +64,11 @@ export default function SocialButton({
         style={[styles.iconButton, getButtonStyle()]}
         className="items-center justify-center rounded-full border"
       >
-        {currentIcon.type === 'image' ? (
-          <Image source={currentIcon.source} className="w-6 h-6" />
-        ) : (
-          <Ionicons 
-            name={currentIcon.name} 
-            size={24} 
-            color={currentIcon.color} 
-          />
-        )}
+        <Ionicons 
+          name={currentIcon.name} 
+          size={24} 
+          color={currentIcon.color} 
+        />
       </Pressable>
     );
   }
@@ -82,25 +77,21 @@ export default function SocialButton({
     <Pressable 
       onPress={onPress}
       style={[styles.button, getButtonStyle()]}
-      className={`flex-row items-center justify-center rounded-full py-3.5 ${
+      className={`flex-row items-center text-center gap-[37px] py-[12px] pr-[76px] pl-[16px]  rounded-lg ${
         variant === 'outline' ? 'border' : ''
       }`}
     >
-      {currentIcon.type === 'image' ? (
-        <Image source={currentIcon.source} className="w-5 h-5 mr-2" />
-      ) : (
-        <Ionicons 
-          name={currentIcon.name} 
-          size={20} 
-          color={currentIcon.color} 
-        />
-      )}
-      <Text 
+      <Ionicons 
+        name={currentIcon.name} 
+        size={20} 
+        color={icon === 'google' && variant === 'outline' ? '#DB4437' : currentIcon.color} 
+      />
+      <CustomText 
         style={{ color: getTextColor() }}
-        className={`font-semibold ${variant !== 'outline' ? 'ml-2' : ''}`}
+        className="font-semibold ml-6"
       >
         {text}
-      </Text>
+      </CustomText>
     </Pressable>
   );
 }

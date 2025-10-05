@@ -5,6 +5,7 @@ import { useTheme } from '../../hooks/useTheme';
 import Logo from '../../components/Logo';
 import SocialButton from '../../components/SocialButton';
 import ThemeToggle from '../../components/ThemeToggle';
+import CustomText from '../../components/CustomText';
 
 export default function Login() {
   const { colors } = useTheme();
@@ -20,35 +21,35 @@ export default function Login() {
 
       <View className="items-center mt-8 px-6">
         <Logo />
-        <Text style={{ color: colors.text }} className="text-2xl font-bold mb-2">
-          Welcome to Elowen
-        </Text>
-        <Text style={{ color: colors.textSecondary }} className="text-center">
-          Please log in or sign up to continue shopping
-        </Text>
+        <CustomText style={{ color: colors.text }} className="text-3xl font-bold mb-2">
+          مرحبًا بك في متجر ماسة فيشن
+        </CustomText>
+        <CustomText style={{ color: colors.textSecondary }} className="text-center text-sm">
+          يرجى تسجيل الدخول أو التسجيل للمتابعة في التسوق
+        </CustomText>
       </View>
 
       <View className="px-6 mt-8 gap-3">
         <SocialButton 
           icon="google" 
-          text="Continue with Google"
+          text="تسيجل الدخول باستخدام غوغل  "
           variant="outline"
         />
         <SocialButton 
           icon="facebook" 
-          text="Continue with Facebook"
+          text="تسجيل الدخول باستخدام فيسبوك"
           variant="facebook"
         />
         <SocialButton 
           icon="apple" 
-          text="Continue with Apple"
+          text="تسجيل الدخول باستخدام آبل"
           variant="apple"
         />
       </View>
 
       <View className="flex-row items-center px-6 my-6">
         <View style={{ backgroundColor: colors.border }} className="flex-1 h-px" />
-        <Text style={{ color: colors.textSecondary }} className="mx-4">or</Text>
+        <CustomText style={{ color: colors.textSecondary }} className="mx-4">أو</CustomText>
         <View style={{ backgroundColor: colors.border }} className="flex-1 h-px" />
       </View>
 
@@ -57,25 +58,23 @@ export default function Login() {
           style={{ backgroundColor: colors.primary }}
           className="rounded-full py-3.5"
         >
-          <Text 
+          <CustomText 
             style={{ color: colors.background }} 
-            className="text-center font-semibold"
-          >
-            Sign in with password
-          </Text>
+            className="text-center font-semibold">
+          تسجيل الدخول باستخدام البريد الإلكتروني
+          </CustomText>
         </Pressable>
 
-        <View className="flex-row justify-center mt-4">
-          <Text style={{ color: colors.textSecondary }}>
-            Don't have an account?{' '}
-          </Text>
-          <Link href="/(auth)/register" asChild>
-            <Pressable>
-              <Text style={{ color: colors.text }} className="font-semibold">
-                Sign up
-              </Text>
-            </Pressable>
-          </Link>
+        <View className="flex-row justify-center mt-4 gap-2">
+          <CustomText style={{ color: colors.textSecondary }}>
+            هل لديك حساب؟{' '}
+          </CustomText>
+          {/* 🟢 الحل: استخدم Link مع Pressable بشكل صحيح */}
+        <Link href="/(auth)/welcome">
+  <CustomText style={{ color: colors.primary }} className="font-semibold">
+    تسجيل
+  </CustomText>
+</Link>
         </View>
       </View>
     </View>
