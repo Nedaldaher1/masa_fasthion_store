@@ -11,6 +11,7 @@ interface AuthStore {
   login: (user: User, token: string) => void;
   logout: () => void;
   updateUser: (user: Partial<User>) => void;
+  setAuthenticated: (value: boolean) => void; // ✅ إضافة هذه الدالة
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -35,6 +36,11 @@ export const useAuthStore = create<AuthStore>()(
       updateUser: (userData) => set((state) => ({
         user: state.user ? { ...state.user, ...userData } : null,
       })),
+
+      // ✅ دالة جديدة لتغيير حالة المصادقة (للتطوير)
+      setAuthenticated: (value) => set({
+        isAuthenticated: value,
+      }),
     }),
     {
       name: 'auth-storage',
@@ -42,18 +48,3 @@ export const useAuthStore = create<AuthStore>()(
     }
   )
 );
-
-// hooks/useTheme.ts
-import { useThemeStore } from '../store/themeStore';
-
-export const useTheme = () => {
-  const { theme, colors, toggleTheme, setTheme } = useThemeStore();
-  
-  return {
-    theme,
-    colors,
-    toggleTheme,
-    setTheme,
-    isDark: theme === 'dark',
-  };
-};

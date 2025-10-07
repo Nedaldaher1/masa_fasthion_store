@@ -70,7 +70,7 @@ export default function Login() {
             هل لديك حساب؟{' '}
           </CustomText>
           {/* 🟢 الحل: استخدم Link مع Pressable بشكل صحيح */}
-        <Link href="/(auth)/welcome">
+        <Link href="/(tabs)/index">
   <CustomText style={{ color: colors.primary }} className="font-semibold">
     تسجيل
   </CustomText>

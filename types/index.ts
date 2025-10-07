@@ -44,14 +44,9 @@ export interface Product {
   name: string;
   price: number;
   image: string;
-  description: string;
-  category: string;
-  stock: number;
+  description?: string;
 }
 
-export interface CartItem extends Product {
-  quantity: number;
-}
 
 export interface User {
   id: string;
@@ -66,4 +61,9 @@ export interface Order {
   total: number;
   status: 'pending' | 'processing' | 'shipped' | 'delivered';
   createdAt: string;
+}
+export interface CartItem extends Product {
+  quantity: number;
+  color?: string;
+  size?: string;
 }

@@ -7,7 +7,10 @@ import { useTheme } from '../hooks/useTheme';
 import { useAuthStore } from '../store/authStore';
 import { useFonts } from 'expo-font';
 import { View, Text } from 'react-native';
-import { setCustomText } from 'react-native-global-props'; // 👈 المكتبة
+import { setCustomText } from 'react-native-global-props';
+
+// 🔧 وضع التطوير - غيّر هذا إلى false عند الانتهاء من التطوير
+const DEV_MODE = true;
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,11 +31,28 @@ function RootLayoutNav() {
   const segments = useSegments();
   const router = useRouter();
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
+
+  // 🟢 في وضع التطوير، اجعل المستخدم مسجل دخول تلقائياً
+  useEffect(() => {
+    if (DEV_MODE) {
+      setAuthenticated(true);
+    }
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       const inAuthGroup = segments[0] === '(auth)';
 
+      // في وضع التطوير، انتقل مباشرة للتابات
+      if (DEV_MODE) {
+        if (inAuthGroup) {
+          router.replace('/(tabs)');
+        }
+        return;
+      }
+
+      // الكود الأصلي للإنتاج
       if (!isAuthenticated && !inAuthGroup) {
         router.replace('/(auth)/login');
       } else if (isAuthenticated && inAuthGroup) {

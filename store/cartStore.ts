@@ -1,7 +1,21 @@
+// store/cartStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CartItem, Product } from '../types';
+
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  description?: string;
+  color?: string;
+  size?: string;
+}
+
+export interface CartItem extends Product {
+  quantity: number;
+}
 
 interface CartStore {
   items: CartItem[];
@@ -19,18 +33,25 @@ export const useCartStore = create<CartStore>()(
       items: [],
 
       addItem: (product) => set((state) => {
-        const existingItem = state.items.find(item => item.id === product.id);
-        
+        // التحقق إذا كان المنتج موجود بنفس اللون والمقاس
+        const existingItem = state.items.find(
+          item => item.id === product.id && 
+                  item.color === product.color && 
+                  item.size === product.size
+        );
+
         if (existingItem) {
           return {
             items: state.items.map(item =>
-              item.id === product.id
+              item.id === product.id && 
+              item.color === product.color && 
+              item.size === product.size
                 ? { ...item, quantity: item.quantity + 1 }
                 : item
             ),
           };
         }
-        
+
         return {
           items: [...state.items, { ...product, quantity: 1 }],
         };
